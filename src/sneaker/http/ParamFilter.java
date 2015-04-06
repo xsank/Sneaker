@@ -28,7 +28,7 @@ public class ParamFilter extends Filter{
 	}
 	
 	private void parseGet(HttpExchange httpExchange) throws UnsupportedEncodingException{
-		Map<String, Object> params=new HashMap<String, Object>();
+		Map<String, String> params=new HashMap<String, String>();
 		URI requestUri=httpExchange.getRequestURI();
 		String query=requestUri.getRawQuery();
 		parseQuery(query, params);
@@ -38,7 +38,7 @@ public class ParamFilter extends Filter{
 	private void parsePost(HttpExchange httpExchange) throws IOException{
 		if("post".equalsIgnoreCase(httpExchange.getRequestMethod())){
 			@SuppressWarnings("unchecked")
-			Map<String, Object> params=(Map<String, Object>) httpExchange.getAttribute("params");
+			Map<String, String> params=(Map<String, String>) httpExchange.getAttribute("params");
 			InputStreamReader isr=new InputStreamReader(httpExchange.getRequestBody(),"utf-8");
 			BufferedReader bReader=new BufferedReader(isr);
 			String query=bReader.readLine();
@@ -47,7 +47,7 @@ public class ParamFilter extends Filter{
 		}
 	}
 	
-	private void parseQuery(String query,Map<String, Object> params) throws UnsupportedEncodingException{
+	private void parseQuery(String query,Map<String, String> params) throws UnsupportedEncodingException{
 		if(query!=null){
 			String pairs[]=query.split("[&]");
 			for(String pair:pairs){

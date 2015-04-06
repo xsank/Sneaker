@@ -8,8 +8,9 @@ import sneaker.util.Util;
 
 
 public class ThreadPool {
+	private static int POOL_SIZE=Runtime.getRuntime().availableProcessors();
 
-	private static ExecutorService executor=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+	private static ExecutorService executor=Executors.newFixedThreadPool(POOL_SIZE);
 	
 	public static void execute(Runnable task){
 		if(!executor.isShutdown()){

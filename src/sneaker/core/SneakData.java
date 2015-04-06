@@ -8,13 +8,20 @@ import sneaker.util.Util;
 
 
 public class SneakData {
-	public static ClassLoader parent = SneakData.class.getClassLoader();
-	public static GroovyClassLoader loader = new GroovyClassLoader(parent);
+	public ClassLoader parent;
+	public GroovyClassLoader loader;
 
 	public boolean isFile;
 	public String param;
 	
 	public SneakData(boolean isFile,String param){
+		this(Thread.currentThread().getContextClassLoader(), isFile, param);
+		this.isFile=isFile;
+		this.param=param;
+	}
+	
+	public SneakData(ClassLoader classLoader,boolean isFile,String param){
+		loader=new GroovyClassLoader(classLoader);
 		this.isFile=isFile;
 		this.param=param;
 	}

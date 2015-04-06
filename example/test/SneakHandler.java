@@ -12,8 +12,8 @@ public class SneakHandler extends Handler{
 
 	@Override
 	public void handle(HttpExchange httpExchange){
-		Map<String, Object> params=getParams(httpExchange);
-		boolean isFile=new Boolean((String) params.get("isFile")).booleanValue();
+		Map<String, String> params=getParams(httpExchange);
+		boolean isFile=new Boolean(params.get("isFile")).booleanValue();
 		String param=(String) params.get("param");
 		String res=Sneak.run(isFile, param);
 		reply(httpExchange, res);

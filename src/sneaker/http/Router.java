@@ -12,7 +12,13 @@ import com.sun.net.httpserver.HttpHandler;
 public class Router implements HttpHandler{
 	private Map<String, Handler> urlPattern=new HashMap<String, Handler>();
 	
-	public void addUrl(String url,Handler handler){
+	public void init(Map<String, Handler> urls){
+		for(String url:urls.keySet()){
+			addUrl(url,urls.get(url));
+		}
+	}
+	
+	private void addUrl(String url,Handler handler){
 		this.urlPattern.put(url, handler);
 	}
 

@@ -4,7 +4,7 @@ import sneaker.http.SimpleHttpServer;
 
 public class Main {
 	public static void main(String[] args){
-		SimpleHttpServer sHttpServer=new SimpleHttpServer(9999, 10);
+		SimpleHttpServer sHttpServer=new SimpleHttpServer(9999);
 		sHttpServer.initRouter(Urls.urlpattern);
 		sHttpServer.start();
 	}

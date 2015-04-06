@@ -6,9 +6,13 @@ import sneaker.util.Util;
 import groovy.lang.GroovyObject;
 
 public class Sneak {
-
+	
 	public static String run(boolean isFile,String param){
-		SneakData sData=new SneakData(isFile, param);
+		return run(Thread.currentThread().getContextClassLoader(), isFile, param);
+	}
+
+	public static String run(ClassLoader classLoader,boolean isFile,String param){
+		SneakData sData=new SneakData(classLoader,isFile, param);
 		Class<?> gClass=sData.parseDataToClass();
 		if(gClass==null){
 			return Constant.DATA_PARSE_FAILED;
@@ -17,7 +21,12 @@ public class Sneak {
 		String res=Constant.EXEC_FAILED;
 		try {
 			gObject = (GroovyObject) gClass.newInstance();
-			res=(String) gObject.invokeMethod("sneakRun", null);
+			Object result=gObject.invokeMethod("run", null);
+			if(result instanceof Integer){
+				res=String.valueOf(result);
+			}else{
+				res=(String) result;
+			}
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

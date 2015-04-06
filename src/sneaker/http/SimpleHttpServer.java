@@ -2,6 +2,7 @@ package sneaker.http;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 import java.util.Map;
 
 import sneaker.util.Util;
@@ -9,35 +10,50 @@ import sneaker.util.Util;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.spi.HttpServerProvider;
 
 
 public class SimpleHttpServer {
+	public static int DEFAULT_CONNECTION=10;
 
 	private HttpServer httpServer;
 	private Router router=new Router();
+	private boolean isInitRouter=false;
+	
+	public SimpleHttpServer(int port){
+		this(port, DEFAULT_CONNECTION);
+	}
 	
 	public SimpleHttpServer(int port,int maxCon){
-		HttpServerProvider provider=HttpServerProvider.provider();
-		  try {
-			  httpServer = provider.createHttpServer(
-	                    new InetSocketAddress(port), maxCon);
-	        } catch (IOException e) {
-	           Util.severeLog("httpserver create failed:",e);
-	        }
+		try {
+			httpServer=HttpServer.create(new InetSocketAddress(port), maxCon);
+			router=new Router();
+		} catch (IOException e) {
+	        Util.severeLog("httpserver create failed:",e);
+	    }
+
+	}
+	
+	@SuppressWarnings("serial")
+	public void initRouter(){
+		this.initRouter(new HashMap<String,Handler>(){{
+			put("/", new NullHandler());
+		}});
 	}
 	
 	public void initRouter(Map<String, Handler> urls){
-		for(String url:urls.keySet()){
-			router.addUrl(url, urls.get(url));
-		}
+		router.init(urls);
+		isInitRouter=true;
 	}
 	
 	public void start(){
-		HttpContext context=httpServer.createContext("/", router);
-		context.getFilters().add(new ParamFilter());
-		httpServer.setExecutor(null);
-		httpServer.start();
+		if(isInitRouter){
+			HttpContext context=httpServer.createContext("/", router);
+			context.getFilters().add(new ParamFilter());
+			httpServer.setExecutor(null);
+			httpServer.start();
+		}else{
+			Util.severeLog("the router should be initialized");
+		}
 	}
 	
 	public void stop(){
