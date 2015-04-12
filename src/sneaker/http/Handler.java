@@ -7,13 +7,10 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpExchange;
 
 public abstract class Handler {
-	private Map<String, String> params;
-	public abstract void handle(HttpExchange httpExchange);
+	public abstract void handle(HttpHanlderExchange httpExchange);
 	
-	@SuppressWarnings("unchecked")
-	public Map<String, String> getParams(HttpExchange httpExchange){
-		params=(Map<String, String>) httpExchange.getAttribute("params");
-		return params;
+	public void proxyHandle(HttpExchange httpExchange){
+		handle(new HttpHanlderExchangeImpl(httpExchange));
 	}
 	
 	public void reply(HttpExchange httpExchange,String response){

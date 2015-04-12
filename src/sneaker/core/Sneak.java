@@ -15,7 +15,7 @@ public class Sneak {
 		SneakData sData=new SneakData(classLoader,isFile, param);
 		Class<?> gClass=sData.parseDataToClass();
 		if(gClass==null){
-			return Constant.DATA_PARSE_FAILED;
+			return Constant.CLASS_DATA_PARSE_FAILED;
 		}
 		GroovyObject gObject;
 		String res=Constant.EXEC_FAILED;
@@ -29,9 +29,11 @@ public class Sneak {
 			}
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
+			res=e.getMessage();
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
+			res=e.getMessage();
 			e.printStackTrace();
 		}
 		Util.infoLog("sneak run result:",res);

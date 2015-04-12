@@ -35,8 +35,7 @@ public class SneakData {
 				return loader.parseClass(param);
 			}
 		}catch (Exception e) {
-			e.printStackTrace();
-			Util.severeLog("sneak data parse error:",e);
+			Util.severeLog("sneak data parse error:",e.getMessage());
 			return null;
 		}
 	}

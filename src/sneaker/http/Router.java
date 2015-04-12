@@ -32,7 +32,7 @@ public class Router implements HttpHandler{
 			ThreadPool.execute(new Runnable() {
 				@Override
 				public void run() {
-					handler.handle(httpExchange);
+					handler.proxyHandle(httpExchange);
 				}
 			});
 		}
