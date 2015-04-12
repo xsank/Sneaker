@@ -1,27 +1,21 @@
 package sneaker.http;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
-
-import sneaker.util.Util;
-
-
-import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpServer;
 
 
 public abstract class SimpleBaseHttpServer {
 	protected static int DEFAULT_CONNECTION=10;
 	protected static boolean IS_SECURE=false;
 	
-	protected Router router=new Router();
+	protected Router router;
 	protected boolean isInitRouter=false;
 	protected boolean isSecure=false;
+	protected RouterHandler routerHandler;
 	
 	public SimpleBaseHttpServer(int port,int maxCon,boolean isSecure){
 		router=new Router();
+		routerHandler=new RouterHandler(router);
 	}
 	
 	@SuppressWarnings("serial")

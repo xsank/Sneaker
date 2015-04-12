@@ -12,10 +12,7 @@ import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpPrincipal;
 
-/*
- * Try to extends httpexchange
- * failed?
- */
+
 public class HttpHanlderExchangeImpl extends HttpHanlderExchange{
 	private HttpExchange httpExchange;
 	private Map<String, String> params;

@@ -28,7 +28,7 @@ public class SimpleHttpServer extends SimpleBaseHttpServer{
 	
 	public void start(){
 		if(isInitRouter){
-			HttpContext context=httpServer.createContext("/", router);
+			HttpContext context=httpServer.createContext("/", routerHandler);
 			context.getFilters().add(new ParamFilter());
 			httpServer.setExecutor(null);
 			httpServer.start();

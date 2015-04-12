@@ -9,10 +9,6 @@ import com.sun.net.httpserver.HttpExchange;
 public abstract class Handler {
 	public abstract void handle(HttpHanlderExchange httpExchange);
 	
-	public void proxyHandle(HttpExchange httpExchange){
-		handle(new HttpHanlderExchangeImpl(httpExchange));
-	}
-	
 	public void reply(HttpExchange httpExchange,String response){
 		try {
 			httpExchange.sendResponseHeaders(200, response.length());
